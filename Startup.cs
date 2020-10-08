@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,16 +26,16 @@ namespace Service
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddCors(Options =>
+            services.AddCors(options =>
             {
-                Options.AddPolicy("myCors", policy =>
-                {
-                    policy.WithOrigins("*").AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials();
-                });
-            }
-            );
+                options.AddPolicy("myCors", policy =>
+                 {
+                     policy.WithOrigins("*")
+                     .AllowAnyHeader()
+                     .AllowAnyMethod()
+                     .AllowCredentials();
+                 });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,7 +52,7 @@ namespace Service
             }
 
             app.UseHttpsRedirection();
-            app.UseCors();
+            app.UseCors("myCors");
             app.UseStaticFiles();
             app.UseMvc();
         }
